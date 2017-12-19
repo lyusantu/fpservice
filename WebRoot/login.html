@@ -1,0 +1,110 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录 - 菁菁教育</title>
+<meta name="description" content="菁菁教育" />
+<meta name="keywords" content="菁菁教育" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link href="fp/css/box.css" rel="stylesheet" type="text/css" />
+<script src="fp/js/main.js" type="text/javascript"></script>
+<script src="fp/js/fingerprint.js" type="text/javascript"></script>
+<script src="fp/js/jquery.js" type="text/javascript"></script>
+<script src="fp/js/baseMoth.js" type="text/javascript"></script>
+<script src="fp/js/dhtmlxCommon.js" type="text/javascript"></script>
+<script type="text/javascript">
+	if (window.XMLHttpRequest) { //Mozilla, Safari,IE7 
+		if (!window.ActiveXObject) { // Mozilla, Safari,
+			//alert("为确保您的使用效果，请选用IE系列浏览器！");
+		}
+	}
+	function correctPNG() {
+		var arVersion = navigator.appVersion.split("MSIE")
+		var version = parseFloat(arVersion[1])
+		if ((version >= 5.5) && (document.body.filters)) {
+			for ( var j = 0; j < document.images.length; j++) {
+				var img = document.images[j]
+				var imgName = img.src.toUpperCase()
+				if (imgName.substring(imgName.length - 3, imgName.length) == "PNG") {
+					var imgID = (img.id) ? "id='" + img.id + "' " : ""
+					var imgClass = (img.className) ? "class='" + img.className
+							+ "' " : ""
+					var imgTitle = (img.title) ? "title='" + img.title + "' "
+							: "title='" + img.alt + "' "
+					var imgStyle = "display:inline-block;" + img.style.cssText
+					if (img.align == "left")
+						imgStyle = "float:left;" + imgStyle
+					if (img.align == "right")
+						imgStyle = "float:right;" + imgStyle
+					if (img.parentElement.href)
+						imgStyle = "cursor:hand;" + imgStyle
+					var strNewHTML = "<span "
+							+ imgID
+							+ imgClass
+							+ imgTitle
+							+ " style=\""
+							+ "width:"
+							+ img.width
+							+ "px; height:"
+							+ img.height
+							+ "px;"
+							+ imgStyle
+							+ ";"
+							+ "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+							+ "(src=\'" + img.src
+							+ "\', sizingMethod='scale');\"></span>"
+					img.outerHTML = strNewHTML
+					j = j - 1
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<form method="post" id="fpVerifyForm" name="fpVerifyForm" action="authLoginAction!login.do?fpLogin=fpLogin" enctype="multipart/form-data"
+		style="display: none">
+		<input type="hidden" id="verifyModel" name="verifyModel" /> <input type="hidden" id="verifyTemplate" name="verifyTemplate" />
+	</form>
+
+	<div id="fpRegisterDiv" style="display: none; height: do">
+		<a id="fpRegister" onclick='submitRegister("指纹", "指纹数:", "确认保存当前修改吗？", "驱动下载", false)' title="请安装指纹驱动或启动该服务" class="showGray"
+			onmouseover="this.className='showGray'">注册</a>
+	</div>
+
+	<!-- 
+	<div id="driverDownload" style="display: inline; margin: 0 0 0 5px;">
+		<a id='downloadDriver' href='middleware/zkbioonline.exe'
+			title='驱动下载'>驱动下载</a>
+	</div>
+	 -->
+
+	<div id="comparisonDiv" class="box" style="display: none">
+		<h2>指纹比对</h2>
+		<div class="list">
+			<canvas id="canvasComp" width="430" height="320" style="background: url('fp/image/base_fpVerify.jpg') rgb(243, 245, 240);"></canvas>
+			<input type="button" value="关闭" onclick='closeCompa()' />
+		</div>
+	</div>
+
+	<div id="bg" style="display: none;"></div>
+	<div id="box" class="box" style="display: none;">
+		<h2>指纹登记</h2>
+		<div class="list">
+			<canvas id="canvas" width="430" height="450" style="background: rgb(243, 245, 240)"></canvas>
+			<input type="hidden" id="whetherModify" name="whetherModify" alt="" value="111" />
+
+			<div style="position: absolute; left: 310px; top: 325px; width: 70px; height: 28px;">
+				<button type="button" id="submitButtonId" name="makeSureName" onclick="submitEvent()" class="button-form">确定</button>
+				<!-- ${common_edit_ok}:确定 -->
+			</div>
+			<div style="position: absolute; left: 310px; top: 365px; width: 70px; height: 28px;">
+				<button class="button-form" type="button" id="closeButton" name="closeButton" onclick='cancelEvent("确认保存当前修改吗?", "指纹数:");'>取消</button>
+				<!-- ${common_edit_cancel}:取消 -->
+			</div>
+		</div>
+	</div>
+	<input type="button" class="loginbtn" id="fploginbtn" value="指纹登录" onclick="fpVerification('指纹比对','请安装指纹驱动或启动服务',true,globalContext)" />
+</body>
+</html>

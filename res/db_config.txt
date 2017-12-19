@@ -1,0 +1,15 @@
+jdbcUrl = jdbc:mysql://127.0.0.1:3306/ucenter?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password = root
+devMode = false
+
+table = fingers
+id = id
+uid = uid
+finger = finger
+fingerNum = finger_num
+createTime = createtime
+loginTime = logintime
+flag = flag
+sid = sid
+return = id
